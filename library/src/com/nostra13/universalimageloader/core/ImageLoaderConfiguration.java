@@ -53,35 +53,35 @@ import java.util.concurrent.Executor;
  */
 public final class ImageLoaderConfiguration {
 
-	final Resources resources;
+	public final Resources resources;
 
-	final int maxImageWidthForMemoryCache;
-	final int maxImageHeightForMemoryCache;
-	final int maxImageWidthForDiscCache;
-	final int maxImageHeightForDiscCache;
-	final CompressFormat imageCompressFormatForDiscCache;
-	final int imageQualityForDiscCache;
-	final BitmapProcessor processorForDiscCache;
+	public final int maxImageWidthForMemoryCache;
+	public final int maxImageHeightForMemoryCache;
+	public final int maxImageWidthForDiscCache;
+	public final int maxImageHeightForDiscCache;
+	public final CompressFormat imageCompressFormatForDiscCache;
+	public final int imageQualityForDiscCache;
+	public final BitmapProcessor processorForDiscCache;
 
-	final Executor taskExecutor;
-	final Executor taskExecutorForCachedImages;
-	final boolean customExecutor;
-	final boolean customExecutorForCachedImages;
+	public final Executor taskExecutor;
+	public final Executor taskExecutorForCachedImages;
+	public final boolean customExecutor;
+	public final boolean customExecutorForCachedImages;
 
-	final int threadPoolSize;
-	final int threadPriority;
-	final QueueProcessingType tasksProcessingType;
+	public final int threadPoolSize;
+	public final int threadPriority;
+	public final QueueProcessingType tasksProcessingType;
 
-	final MemoryCacheAware<String, Bitmap> memoryCache;
-	final DiscCacheAware discCache;
-	final ImageDownloader downloader;
-	final ImageDecoder decoder;
-	final DisplayImageOptions defaultDisplayImageOptions;
-	final boolean writeLogs;
+	public final MemoryCacheAware<String, Bitmap> memoryCache;
+	public final DiscCacheAware discCache;
+	public final ImageDownloader downloader;
+	public final ImageDecoder decoder;
+	public final DisplayImageOptions defaultDisplayImageOptions;
+	public final boolean writeLogs;
 
-	final DiscCacheAware reserveDiscCache;
-	final ImageDownloader networkDeniedDownloader;
-	final ImageDownloader slowNetworkDownloader;
+	public final DiscCacheAware reserveDiscCache;
+	public final ImageDownloader networkDeniedDownloader;
+	public final ImageDownloader slowNetworkDownloader;
 
 	private ImageLoaderConfiguration(final Builder builder) {
 		resources = builder.context.getResources();

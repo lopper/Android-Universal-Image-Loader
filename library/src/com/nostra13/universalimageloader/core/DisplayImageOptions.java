@@ -190,7 +190,7 @@ public final class DisplayImageOptions {
 		return handler;
 	}
 
-	boolean isSyncLoading() {
+	public boolean isSyncLoading() {
 		return isSyncLoading;
 	}
 

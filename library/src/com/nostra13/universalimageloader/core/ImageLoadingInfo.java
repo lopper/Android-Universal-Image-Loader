@@ -20,6 +20,7 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListe
 import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.nostra13.universalimageloader.core.imageaware.ImageAware;
 
+import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -32,16 +33,17 @@ import java.util.concurrent.locks.ReentrantLock;
  * @see com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener
  * @since 1.3.1
  */
-final class ImageLoadingInfo {
+public class ImageLoadingInfo {
 
-	final String uri;
-	final String memoryCacheKey;
-	final ImageAware imageAware;
-	final ImageSize targetSize;
-	final DisplayImageOptions options;
-	final ImageLoadingListener listener;
-	final ImageLoadingProgressListener progressListener;
-	final ReentrantLock loadFromUriLock;
+	public final String uri;
+	public final String memoryCacheKey;
+	public final ImageAware imageAware;
+	public final ImageSize targetSize;
+	public final DisplayImageOptions options;
+	public final ImageLoadingListener listener;
+	public final ImageLoadingProgressListener progressListener;
+	public final ReentrantLock loadFromUriLock;
+	public List<String> urls;
 
 	public ImageLoadingInfo(String uri, ImageAware imageAware, ImageSize targetSize, String memoryCacheKey,
 			DisplayImageOptions options, ImageLoadingListener listener,
@@ -54,5 +56,14 @@ final class ImageLoadingInfo {
 		this.progressListener = progressListener;
 		this.loadFromUriLock = loadFromUriLock;
 		this.memoryCacheKey = memoryCacheKey;
+		this.urls =  null;
+	}
+	
+	public ImageLoadingInfo(String uri, List<String> urls, ImageAware imageAware, ImageSize targetSize, String memoryCacheKey,
+			DisplayImageOptions options, ImageLoadingListener listener,
+			ImageLoadingProgressListener progressListener, ReentrantLock loadFromUriLock) {
+		this(uri, imageAware, targetSize, memoryCacheKey, options, listener, progressListener, loadFromUriLock);
+		this.urls = urls;
+
 	}
 }

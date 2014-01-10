@@ -37,9 +37,9 @@ import java.util.concurrent.locks.ReentrantLock;
  * @author Sergey Tarasevich (nostra13[at]gmail[dot]com)
  * @since 1.7.1
  */
-class ImageLoaderEngine {
+public class ImageLoaderEngine {
 
-	final ImageLoaderConfiguration configuration;
+	public final ImageLoaderConfiguration configuration;
 
 	private Executor taskExecutor;
 	private Executor taskExecutorForCachedImages;
@@ -65,7 +65,7 @@ class ImageLoaderEngine {
 	}
 
 	/** Submits task to execution pool */
-	void submit(final LoadAndDisplayImageTask task) {
+	public void submit(final ILoadAndDisplayTask task) {
 		taskDistributor.execute(new Runnable() {
 			@Override
 			public void run() {
@@ -79,9 +79,13 @@ class ImageLoaderEngine {
 			}
 		});
 	}
-
 	/** Submits task to execution pool */
-	void submit(ProcessAndDisplayImageTask task) {
+	public void submit(Runnable task) {
+		initExecutorsIfNeed();
+		taskExecutorForCachedImages.execute(task);
+	}
+	/** Submits task to execution pool */
+	public void submit(ProcessAndDisplayImageTask task) {
 		initExecutorsIfNeed();
 		taskExecutorForCachedImages.execute(task);
 	}
@@ -105,7 +109,7 @@ class ImageLoaderEngine {
 	/**
 	 * Returns URI of image which is loading at this moment into passed {@link com.nostra13.universalimageloader.core.imageaware.ImageAware}
 	 */
-	String getLoadingUriForView(ImageAware imageAware) {
+	public String getLoadingUriForView(ImageAware imageAware) {
 		return cacheKeysForImageAwares.get(imageAware.getId());
 	}
 
@@ -113,7 +117,7 @@ class ImageLoaderEngine {
 	 * Associates <b>memoryCacheKey</b> with <b>imageAware</b>. Then it helps to define image URI is loaded into View at
 	 * exact moment.
 	 */
-	void prepareDisplayTaskFor(ImageAware imageAware, String memoryCacheKey) {
+	public void prepareDisplayTaskFor(ImageAware imageAware, String memoryCacheKey) {
 		cacheKeysForImageAwares.put(imageAware.getId(), memoryCacheKey);
 	}
 
@@ -123,7 +127,7 @@ class ImageLoaderEngine {
 	 * @param imageAware {@link com.nostra13.universalimageloader.core.imageaware.ImageAware} for which display task
 	 *                   will be cancelled
 	 */
-	void cancelDisplayTaskFor(ImageAware imageAware) {
+	public void cancelDisplayTaskFor(ImageAware imageAware) {
 		cacheKeysForImageAwares.remove(imageAware.getId());
 	}
 
@@ -154,12 +158,12 @@ class ImageLoaderEngine {
 	 * Pauses engine. All new "load&display" tasks won't be executed until ImageLoader is {@link #resume() resumed}.<br
 	 * /> Already running tasks are not paused.
 	 */
-	void pause() {
+	public void pause() {
 		paused.set(true);
 	}
 
 	/** Resumes engine work. Paused "load&display" tasks will continue its work. */
-	void resume() {
+	public void resume() {
 		paused.set(false);
 		synchronized (pauseLock) {
 			pauseLock.notifyAll();
@@ -167,7 +171,7 @@ class ImageLoaderEngine {
 	}
 
 	/** Stops engine, cancels all running and scheduled display image tasks. Clears internal data. */
-	void stop() {
+	public void stop() {
 		if (!configuration.customExecutor) {
 			((ExecutorService) taskExecutor).shutdownNow();
 		}
@@ -179,7 +183,7 @@ class ImageLoaderEngine {
 		uriLocks.clear();
 	}
 
-	ReentrantLock getLockForUri(String uri) {
+	public ReentrantLock getLockForUri(String uri) {
 		ReentrantLock lock = uriLocks.get(uri);
 		if (lock == null) {
 			lock = new ReentrantLock();
@@ -188,19 +192,19 @@ class ImageLoaderEngine {
 		return lock;
 	}
 
-	AtomicBoolean getPause() {
+	public AtomicBoolean getPause() {
 		return paused;
 	}
 
-	Object getPauseLock() {
+	public Object getPauseLock() {
 		return pauseLock;
 	}
 
-	boolean isNetworkDenied() {
+	public boolean isNetworkDenied() {
 		return networkDenied.get();
 	}
 
-	boolean isSlowNetwork() {
+	public boolean isSlowNetwork() {
 		return slowNetwork.get();
 	}
 }

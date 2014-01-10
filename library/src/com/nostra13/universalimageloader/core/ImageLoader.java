@@ -50,9 +50,9 @@ public class ImageLoader {
 
 	public static final String TAG = ImageLoader.class.getSimpleName();
 
-	static final String LOG_INIT_CONFIG = "Initialize ImageLoader with configuration";
-	static final String LOG_DESTROY = "Destroy ImageLoader";
-	static final String LOG_LOAD_IMAGE_FROM_MEMORY_CACHE = "Load image from memory cache [%s]";
+	public static final String LOG_INIT_CONFIG = "Initialize ImageLoader with configuration";
+	public static final String LOG_DESTROY = "Destroy ImageLoader";
+	public static final String LOG_LOAD_IMAGE_FROM_MEMORY_CACHE = "Load image from memory cache [%s]";
 
 	private static final String WARNING_RE_INIT_CONFIG = "Try to initialize ImageLoader which had already been initialized before. " + "To re-init ImageLoader with new configuration call ImageLoader.destroy() at first.";
 	private static final String ERROR_WRONG_ARGUMENTS = "Wrong arguments were passed to displayImage() method (ImageView reference must not be null)";
@@ -609,6 +609,10 @@ public class ImageLoader {
 		return engine.getLoadingUriForView(imageAware);
 	}
 
+	
+	public ImageLoaderEngine getImageLoaderEngine(){
+		return engine;
+	}
 	/**
 	 * Returns URI of image which is loading at this moment into passed
 	 * {@link android.widget.ImageView ImageView}
@@ -697,7 +701,7 @@ public class ImageLoader {
 		configuration = null;
 	}
 
-	private static Handler defineHandler(DisplayImageOptions options) {
+	public static Handler defineHandler(DisplayImageOptions options) {
 		Handler handler = options.getHandler();
 		if (options.isSyncLoading()) {
 			handler = null;
